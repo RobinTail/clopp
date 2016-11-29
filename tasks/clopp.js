@@ -143,10 +143,12 @@ module.exports = function(grunt)
             {
                 file.src.forEach(function (src)
                 {
-                    if (grunt.file.isFile(src) && grunt.file.isFile(file.dest + path.basename(src)))
+                    // robin - support file property - rename
+                    if (grunt.file.isFile(src) && grunt.file.isFile(file.dest + (file.rename ? file.rename : path.basename(src))))
                     {
                         //grunt.verbose.write("Preprocessing file " + (file.dest + path.basename(src)).cyan + "...");
-                        var preprocessed = clopp.preprocess(grunt, file.dest + path.basename(src), {
+                        // robin - support file property - rename
+                        var preprocessed = clopp.preprocess(grunt, file.dest + (file.rename ? file.rename : path.basename(src)), {
                             searchDefinitions: false,
                             replaceDefinitions: true,
                             include: false, 
@@ -157,7 +159,8 @@ module.exports = function(grunt)
                         });
 
                         //grunt.verbose.write("Writing result to " + (file.dest + path.basename(src)).cyan + "...");
-                        grunt.file.write(file.dest + path.basename(src), preprocessed);
+                        // robin - support file property - rename
+                        grunt.file.write(file.dest + (file.rename ? file.rename : path.basename(src)), preprocessed);
                     }
                 });
             });
