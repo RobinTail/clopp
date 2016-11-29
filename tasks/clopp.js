@@ -90,7 +90,8 @@ module.exports = function(grunt)
                     if (file.dest)
                     {
                         //grunt.verbose.write("Writing result to " + (file.dest + path.basename(src)).cyan + "...");
-                        grunt.file.write(file.dest + path.basename(src), preprocessed);
+                        // robin - support file property - rename
+                        grunt.file.write(file.dest + (file.rename ? file.rename : path.basename(src)), preprocessed);
                     }
                     else
                     {
